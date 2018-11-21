@@ -75,7 +75,7 @@ def train():
                 # 일반 train 데이터는 0.5 드롭아웃
                 cnn.dropout_keep_prob: 0.5
             }
-            _, step, loss, accuracy = sess.run([train_op, grads_and_vars, global_step, cnn.loss, cnn.accuracy], feed_dict)
+            _, __, step, loss, accuracy = sess.run([train_op, grads_and_vars, global_step, cnn.loss, cnn.accuracy], feed_dict)
 
         def evaluate(x_batch, y_batch):
             feed_dict = {
@@ -84,7 +84,7 @@ def train():
                 cnn.dropout_keep_prob: 1.0
             }
 
-            step, loss, accuracy = sess.run([grads_and_vars, global_step, cnn.loss, cnn.accuracy], feed_dict)
+            __, step, loss, accuracy = sess.run([grads_and_vars, global_step, cnn.loss, cnn.accuracy], feed_dict)
             print("step %d, loss %f, acc %f" % (step, loss, accuracy))
 
         saver = tf.train.Saver()

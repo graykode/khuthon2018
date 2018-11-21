@@ -125,5 +125,5 @@ if __name__ == '__main__':
     rows = len(raw_data)
     bound = int(rows * 0.8)
 
-    save_text('train.txt', raw_data[:bound])
-    save_text('test.txt', raw_data[bound + 1:])
+    save_text('train', raw_data[:bound])
+    save_text('test', raw_data[bound + 1:])

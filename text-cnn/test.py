@@ -3,7 +3,7 @@ import numpy as np
 import preprocessing as pre
 import TextCNN
 
-TRAIN_FILENAME = 'train.txt'
+TRAIN_FILENAME = 'train'
 TRAIN_DATA_FILENAME = TRAIN_FILENAME + '.data'
 TRAIN_VOCAB_FILENAME = TRAIN_FILENAME + '.vocab'
 
