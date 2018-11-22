@@ -2,10 +2,17 @@ from konlpy.tag import Twitter
 import random
 
 pos_tagger = Twitter()
-SEQUENCE_LENGTH = 100
+SEQUENCE_LENGTH = 60
+
+type = ['Number', 'Punctuation']
+prohibition = ['          ', ',', ')']
 
 def tokenize(doc):
-    return ['/'.join(t) for t in pos_tagger.pos(doc, norm=True, stem=True)]
+    result = []
+    for t in pos_tagger.pos(doc, norm=True, stem=True):
+        if t[1] not in type and t[0] not in prohibition:
+            result.append('/'.join(t))
+    return result
 
 # 파일 데이터는 UTF-8 인코딩이어야함.
 def read_raw_data(filename):
@@ -14,7 +21,7 @@ def read_raw_data(filename):
 
         # data[1:]로 맨위 row를 뺀다
         # 3번 칼럼이 포인트, 4번이 댓글
-        data = [(tokenize(row[4]), int(float(row[3]))) for row in data[1:]]
+        data = [(tokenize(row[4]), int(float(row[3]))) for row in data]
     return data
 
 # 단순히 텍스트 파일 셔플링
@@ -117,9 +124,17 @@ def build_input(data, vocab):
             result.append((seq_seg, get_onehot(d[1])))
 
     return result
+  
+def check(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        data = [line.split('\t') for line in f.read().splitlines()]
+        for d in data:
+            if(len(d) != 5):
+                print(d)
 
 if __name__ == '__main__':
-    raw_data = read_raw_text('khu')
+    check('everytime')
+    raw_data = read_raw_text('everytime')
     print('pos_tagger finish')
 
     rows = len(raw_data)
