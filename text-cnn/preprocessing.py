@@ -4,13 +4,12 @@ import random
 pos_tagger = Twitter()
 SEQUENCE_LENGTH = 60
 
-type = ['Number', 'Punctuation']
-prohibition = ['          ', ',', ')']
+type = ['Number', 'Punctuation', 'Foreign', 'Eomi', 'Alpha', 'Conjunction']
 
 def tokenize(doc):
     result = []
     for t in pos_tagger.pos(doc, norm=True, stem=True):
-        if t[1] not in type and t[0] not in prohibition:
+        if t[1] not in type:
             result.append('/'.join(t))
     return result
 

@@ -60,7 +60,7 @@ def train():
         print('initialize cnn filter')
         print('sequence length %d,  number of class %d, vocab size %d' % (seq_length, num_class, len(vocab)))
 
-        cnn = TextCNN(seq_length, num_class, len(vocab), 128, [ 3, 4, 5], 128)
+        cnn = TextCNN(seq_length, num_class, len(vocab), 128, [3, 4, 5], 128)
 
         global_step = tf.Variable(0, name='global_step', trainable=False)
         optimizer = tf.train.AdamOptimizer(1e-3)
@@ -74,7 +74,7 @@ def train():
                 # 일반 train 데이터는 0.5 드롭아웃
                 cnn.dropout_keep_prob: 0.5
             }
-            _, __, step, loss, accuracy = sess.run([train_op, grads_and_vars, global_step, cnn.loss, cnn.accuracy], feed_dict)
+            _, step, loss, accuracy = sess.run([train_op, global_step, cnn.loss, cnn.accuracy], feed_dict)
 
         def evaluate(x_batch, y_batch):
             feed_dict = {
@@ -83,7 +83,7 @@ def train():
                 cnn.dropout_keep_prob: 1.0
             }
 
-            __, step, loss, accuracy = sess.run([grads_and_vars, global_step, cnn.loss, cnn.accuracy], feed_dict)
+            step, loss, accuracy = sess.run([global_step, cnn.loss, cnn.accuracy], feed_dict)
             print("step %d, loss %f, acc %f" % (step, loss, accuracy))
 
         saver = tf.train.Saver()
@@ -92,7 +92,7 @@ def train():
         for i in range(10000):
             try:
                 # 문장 64개를 배치로 뽑아서
-                batch = random.sample(input, 128)
+                batch = random.sample(input, 64)
 
                 # x_batch는 한문장의 형태소 배열
                 # y_batch는 한문장의 라벨 결과값
@@ -101,7 +101,7 @@ def train():
                 current_step = tf.train.global_step(sess, global_step)
                 if current_step % 100 == 0:
                     # 100의 배수마다 test에서 데이터를 뽑아 evaluate한다.
-                    batch = random.sample(test_input, 128)
+                    batch = random.sample(test_input, 64)
                     x_test, y_test = zip(*batch)
                     evaluate(x_test, y_test)
                 if current_step % 1000 == 0:

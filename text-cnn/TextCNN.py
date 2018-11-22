@@ -73,8 +73,9 @@ class TextCNN(object):
 
             # W*x+b
             scores = tf.nn.xw_plus_b(h_drop, W, b, name='scores')
+            hypothesis = tf.nn.softmax(scores)
             # predictions은 1에 대한 조건분포 확률
-            predictions = tf.argmax(scores, 1, name='predictions')
+            predictions = tf.argmax(hypothesis, 1, name='predictions')
 
         # 크로스 엔트로피 손실 함수
         with tf.name_scope('loss'):
@@ -89,6 +90,7 @@ class TextCNN(object):
         self.input = input
         self.label = label
         self.dropout_keep_prob = dropout_keep_prob
+        self.hypothesis = hypothesis
         self.predictions = predictions
         self.loss = loss
         self.accuracy = accuracy
