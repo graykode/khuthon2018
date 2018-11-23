@@ -21,13 +21,15 @@ export default {
         wordcloud
     },
     created(){
-        //eventBus.$emit("createCloud");
+        eventBus.$emit("createCloud");
 
         eventBus.$on("getWord",(data)=>{
+            console.log("getword", data);
             this.defaultWords = [];
             this.wordsData = data;
 
             for(let index in this.wordsData){
+                console.log("!");
                 this.defaultWords.push({
                     name : this.wordsData[index].store_name,
                     value : this.wordsData[index].num,

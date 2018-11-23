@@ -32,8 +32,8 @@ export default {
         eventBus.$on("submit",(data)=>{
             this.getWordFromServer(data);
         });
-        eventBus.$on("createCloud", (data)=>{
-            
+        eventBus.$on("createCloud", ()=>{
+            this.getDefaultFromServer();
         });
     },
     components:{
@@ -87,27 +87,24 @@ export default {
                 console.log(error)
             })
         },
-        getCommentFromServer(data){
-            let baseURI = confidential.aws_url + 'comment';
+        getDefaultFromServer(data){
+            console.log("getDefaultFromServer");
+            let baseURI = confidential.aws_url + 'info';
             
             axios.get(baseURI, {
                 headers:{
-                  'Content-Type': 'application/json',
-                  'x-api-key': confidential.aws_apikey
-                },
-                // body:{
-                //     "store_name": data
-                // }
+                    'Content-Type': 'application/json',
+                    'x-api-key': confidential.aws_apikey
+                }
             })
             .then((result) => {
-                console.log(result);
-                //eventBus.$emit('getCommnet',result.data.Items[0]);
+                eventBus.$emit('getWord', result.data);
             })
             .catch((error) => {
                 console.log("fail")
                 console.log(error)
             })
-        }
+        },
     }
 }
 </script>
