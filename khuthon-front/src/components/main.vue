@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 import eventBus from '../commons/eventBus'
 
 import searchFrom from './searchForm'
@@ -21,10 +22,12 @@ import wordcloud from './wordcloud'
 import comment from './comment'
 import detail from './detail'
 
+import confidential from '../confidential/confidential.json'
+
 export default {
     created(){
-        eventBus.$on("submit", (data)=>{
-            console.log(data);
+        eventBus.$on("wordClick", (data)=>{
+            this.getDataFromServer(data);
         })
     },
     components:{
@@ -34,8 +37,25 @@ export default {
         detail
     },
     methods:{
-        getDataFromServer(){
+        getDataFromServer(data){
+            let baseURI = confidential.aws_url + 'info';
             
+            axios.get(baseURI, {
+                headers:{
+                  'Content-Type': 'application/json',
+                  'x-api-key': confidential.aws_apikey
+                },
+                // body:{
+                //     "store_name": data
+                // }
+            })
+            .then((result) => {
+                eventBus.$emit('getInfo',result.data.Items[0]);
+            })
+            .catch((error) => {
+                console.log("fail")
+                console.log(error)
+            })
         }
     }
 }

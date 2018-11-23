@@ -2,27 +2,13 @@
     <div id="detailWrapper">
         <div id="map">
             <div class="content">
-                <GmapMap
-                   :center="{lat:37.2492188, lng:127.0721632}"
-                    :zoom="16"
-                    map-type-id="terrain"
-                    style="width: 100%; height: 360px;"
-                        >
-                        <!-- <GmapMarker
-                            :key="index"
-                            v-for="(m, index) in markers"
-                            :position="m.position"
-                            :clickable="true"
-                            :draggable="true"
-                            @click="center=m.position"
-                        /> -->
-                </GmapMap>
+                <googleMap></googleMap>
             </div>
         </div>
         <div id="evaluation">
             <div class="content">
                 <div id="shop_detail">
-                    <div id="shop_name">{{data.name}}</div>
+                    <div id="shop_name">{{data.store_name}}</div>
                     <div id="shop_address"><span><i class="fas fa-map-marker-alt"></i></span>{{data.address}}</div>
                     <div id="shop_phone"><span><i class="fas fa-phone"></i></span>{{data.phone}}</div>
                     <div id="shop_category"><span><i class="fas fa-utensils"></i></span>{{data.category}}</div>
@@ -31,7 +17,7 @@
                     <div id="shop_time"><span><i class="fas fa-clock"></i></span>{{data.time}}</div>
                 </div>
                 <div id="star">
-                    <i class="fas fa-star" v-bind={data} v-for="index in data.rate" :key="index"></i>
+                    <i class="fas fa-star" v-bind={data} v-for="index in data.rating" :key="index"></i>
                     <div>이 점수는 머신러닝을 통해 산정된 결과입니다.</div>
                 </div>
             </div>
@@ -41,25 +27,31 @@
 
 <script>
 import eventBus from '../commons/eventBus';
+import googleMap from './googleMap';
 import {gmapApi} from 'vue2-google-maps';
 
 export default {
+    components:{
+        googleMap
+    },
     created(){
-        eventBus.$on("wordClick", (data)=>{
-            console.log("detail.vue",data);
-        })
+        eventBus.$on('getInfo',(data)=>{
+            this.data = data
+            console.log('this.data', this.data);
+            eventBus.$emit('setLocation', this.data.address);
+        });
     },
     data(){
         return{
             data : {
-                name : '수누리 감자탕 경희대점',
-                address : '경기 수원시 영통구 덕영대로 1691',
-                phone : '031-202-8441',
-                category : '감자탕',
-                price : '8,000원',
-                parking : '주차가능',
-                time : '24시간',
-                rate : 3
+                store_name : 'text',
+                address : 'text',
+                phone : 'text',
+                category : 'text',
+                price : 'text',
+                parking : 'text',
+                time : 'text',
+                rating : 3
             }
         }
     }

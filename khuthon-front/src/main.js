@@ -4,6 +4,9 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import axios from 'axios'
+import confidential from './confidential/confidential'
+
 
 Vue.use(VueGoogleMaps, {
   load: { 
@@ -11,6 +14,8 @@ Vue.use(VueGoogleMaps, {
     libraries: 'places'
   }
 });
+
+Vue.prototype.$http = axios;
 
 Vue.config.productionTip = false
 
