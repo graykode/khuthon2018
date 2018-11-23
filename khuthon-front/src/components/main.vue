@@ -1,25 +1,32 @@
 <template>
     <div id="mainWrapper">
         <div id="section1">
-            <searchFrom></searchFrom>
+            <searchFrom></searchFrom> 
             <wordcloud></wordcloud>
         </div>
         <div id="section2">
-            <rank></rank>
+            <detail></detail>
         </div>
     </div>
 </template>
 
 <script>
+import eventBus from '../commons/eventBus'
+
 import searchFrom from './searchForm'
 import wordcloud from './wordcloud'
-import rank from './rank'
+import detail from './detail'
 
 export default {
     components:{
         searchFrom,
         wordcloud,
-        rank
+        detail
+    },
+    created(){
+        eventBus.$on("submit", (data)=>{
+            console.log(data);
+        })
     }
 }
 </script>
@@ -28,22 +35,32 @@ export default {
 #mainWrapper{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    height: 100vh;
+    justify-content: space-around;
+    
+    height: 100%;
+    padding: 15px 30px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    background-image: url("../assets/background2.png");
 }
 #section1{
-    flex-grow: 7;
+    width: 65%;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: space-between;
 }
 #section1 > :nth-child(1){
-    flex-grow: 1;
+    height: 7%;
 }
 #section1 > :nth-child(2){
-    flex-grow: 8;
+    height: 90%;
 }
 #section2{
-    flex-grow: 1
+    width: 25%;
 }
+
 </style>

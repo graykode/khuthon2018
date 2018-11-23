@@ -1,9 +1,10 @@
 <template>
-    <div>
+    <div id="wordcloudWrapper">
         <wordcloud
             :data="defaultWords"
-            nameKey="name"
-            valueKey="value"
+            :rotate = "{ from: -0, to: 0, numOfOrientation: 1 }"
+            nameKey ="name"
+            valueKey ="value"
         >
         </wordcloud>
     </div>
@@ -19,7 +20,43 @@ export default {
     },
     data() {
         return {
-            defaultWords: [{'name':'test','value':100}, {'name':'test','value':50}, {'name':'test','value':10}]
+            defaultWords: [{
+          "name": "Cat",
+          "value": 26
+        },
+        {
+          "name": "fish",
+          "value": 19
+        },
+        {
+          "name": "things",
+          "value": 18
+        },
+        {
+          "name": "look",
+          "value": 16
+        },
+        {
+          "name": "two",
+          "value": 15
+        },
+        {
+          "name": "fun",
+          "value": 9
+        },
+        {
+          "name": "know",
+          "value": 9
+        },
+        {
+          "name": "good",
+          "value": 9
+        },
+        {
+          "name": "play",
+          "value": 6
+        }
+      ]
         }
     },
     methods:{
@@ -32,3 +69,10 @@ export default {
     }
 }
 </script>
+
+<style>
+#wordcloudWrapper{
+    width:100%;
+    background: #ffffff;
+}
+</style>

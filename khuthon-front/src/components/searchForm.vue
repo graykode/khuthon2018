@@ -1,12 +1,23 @@
 <template>
     <div id="inputWrapper">
-        <input type="text">
+        <input type="text" v-on:keyup.enter="submit" v-model="search">
     </div>
 </template>
 
 <script>
-export default {
+import eventBus from '../commons/eventBus'
 
+export default {
+    data(){
+        return{
+            search : null,            
+        }
+    },
+    methods:{
+        submit(){
+            eventBus.$emit('submit', this.search);
+        }
+    }
 }
 </script>
 
@@ -15,9 +26,13 @@ export default {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
+    width: 100%;
 }
 #inputWrapper > input{
-    width: 80%;
+    width: 100%;
+    border: 2px solid #63E884;
+}
+input:focus{
+    outline: none;
 }
 </style>
