@@ -2,8 +2,8 @@
   <div>
     <gmap-map
         :center="center"
-        :zoom="12"
-        style="width: 100%; height: 360px;"
+        :zoom="16"
+        style="width: 100%; height: 345px;"
     >
     <gmap-marker
         :key="index"
@@ -24,7 +24,7 @@ export default {
     name: "GoogleMap",
     created(){
         eventBus.$on('setLocation',(data)=>{
-            console.log('setLocation', data);
+            this.markers = [];
             this.geocode(data);
         })
     },

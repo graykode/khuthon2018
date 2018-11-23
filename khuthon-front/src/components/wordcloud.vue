@@ -1,11 +1,12 @@
 <template>
     <div id="wordcloudWrapper">
         <wordcloud
-            :data="defaultWords"
-            :rotate = "{ from: -0, to: 0, numOfOrientation: 2 }"
-            nameKey ="name"
-            valueKey ="value"
+            :data= "defaultWords"
+            :rotate = "{ from: -0, to: 0, numOfOrientation: 1 }"
+            nameKey = "name"
+            valueKey = "value"
             :wordClick = this.wordClick
+            fontScale = "log"
         >
         </wordcloud>
     </div>
@@ -14,110 +15,40 @@
 <script>
 import eventBus from '../commons/eventBus'
 import wordcloud from 'vue-wordcloud'
-
 export default {
     name: 'app',
     components: {
         wordcloud
     },
+    created(){
+        //eventBus.$emit("createCloud");
+
+        eventBus.$on("getWord",(data)=>{
+            this.defaultWords = [];
+            this.wordsData = data;
+
+            for(let index in this.wordsData){
+                this.defaultWords.push({
+                    name : this.wordsData[index].store_name,
+                    value : this.wordsData[index].num,
+                });
+            }
+        });
+    },
     data() {
         return {
-        defaultWords: [{
-          "name": "Cat",
-          "value": 26
-        },
-        {
-          "name": "fish",
-          "value": 19
-        },
-        {
-          "name": "things",
-          "value": 18
-        },
-        {
-          "name": "look",
-          "value": 16
-        },
-        {
-          "name": "two",
-          "value": 15
-        },
-        {
-          "name": "fun",
-          "value": 9
-        },
-        {
-          "name": "know",
-          "value": 9
-        },
-        {
-          "name": "good",
-          "value": 9
-        },
-        {
-          "name": "play",
-          "value": 6
-        },
-        {
-          "name": "look",
-          "value": 16
-        },
-        {
-          "name": "two",
-          "value": 15
-        },
-        {
-          "name": "fun",
-          "value": 9
-        },
-        {
-          "name": "know",
-          "value": 9
-        },
-        {
-          "name": "good",
-          "value": 9
-        },
-        {
-          "name": "play",
-          "value": 6
-        },
-        {
-          "name": "look",
-          "value": 16
-        },
-        {
-          "name": "two",
-          "value": 15
-        },
-        {
-          "name": "fun",
-          "value": 9
-        },
-        {
-          "name": "know",
-          "value": 9
-        },
-        {
-          "name": "good",
-          "value": 9
-        },
-        {
-          "name": "play",
-          "value": 6
-        }
-        ]
+            wordsData: [],
+            defaultWords: [],
         }
     },
     methods:{
-        addWords(name, value){
-            this.defaultWords.push({
-                name,
-                value
-            })
-        },
         wordClick(text, vm){
-            eventBus.$emit("wordClick", text);
+            for(let index in this.wordsData){
+                if(this.wordsData[index].store_name === text){
+                    eventBus.$emit("wordClick", this.wordsData[index].id);
+                    return;
+                }
+            }
         }
     }
 }

@@ -27,10 +27,12 @@ export default {
     flex-direction: row;
     justify-content: center;
     width: 100%;
+    border: 2px solid #63ace8;
 }
 #inputWrapper > input{
     width: 100%;
-    border: 2px solid #63E884;
+    font-size: 30px;
+    padding-left: 20px;
 }
 input:focus{
     outline: none;

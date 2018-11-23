@@ -17,7 +17,7 @@
                     <div id="shop_time"><span><i class="fas fa-clock"></i></span>{{data.time}}</div>
                 </div>
                 <div id="star">
-                    <i class="fas fa-star" v-bind={data} v-for="index in data.rating" :key="index"></i>
+                    <i class="fas fa-star" v-bind={data} v-for="index in data.average" :key="index"></i>
                     <div>이 점수는 머신러닝을 통해 산정된 결과입니다.</div>
                 </div>
             </div>
@@ -36,7 +36,7 @@ export default {
     },
     created(){
         eventBus.$on('getInfo',(data)=>{
-            this.data = data
+            this.data = data.data
             console.log('this.data', this.data);
             eventBus.$emit('setLocation', this.data.address);
         });
@@ -51,7 +51,7 @@ export default {
                 price : 'text',
                 parking : 'text',
                 time : 'text',
-                rating : 3
+                average : 3
             }
         }
     }
@@ -68,7 +68,7 @@ export default {
 }
 #detailWrapper > *{
     background: #ffffff;
-    margin-bottom: 15px;
+    
     box-shadow: 0 4px 8px 0 rgba(173, 75, 75, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 #map{
