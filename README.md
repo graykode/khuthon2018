@@ -9,11 +9,7 @@ README 수정 및 설명 추가는 자유입니다.!
 - 웹 퍼블리싱을 통한 자료 시각화
 
 ## 스택
-<p><img width="100" src="https://img.stackshare.io/service/3837/paeckCWC.png" /></p>
-<p><img width="100" src="https://img.stackshare.io/service/4717/fKW2snt9.png" /></p>
-<p><img width="100" src="https://img.stackshare.io/service/1491/ZtYnmL9U.jpeg" /></p>
-<p><img width="100" src="https://img.stackshare.io/service/389/amazon-dynamodb.png" /></p>
-
+<p align="center"><img width="100" src="https://img.stackshare.io/service/3837/paeckCWC.png" />  <img width="100" src="https://img.stackshare.io/service/4717/fKW2snt9.png" />  <img width="100" src="https://img.stackshare.io/service/1491/ZtYnmL9U.jpeg" />  <img width="100" src="https://img.stackshare.io/service/389/amazon-dynamodb.png" /></p>
 
 ## 브랜치(Task)
 해커톤 시 본인의 업무가 끝나면 아직 안끝난 다른 업무를 도와줄수 있습니다!.
