@@ -23,6 +23,7 @@ README 수정 및 설명 추가는 자유입니다.!
 - 박민재(컴퓨터공학과 17) sobu0715@gmail.com
 
 ## 참고 레퍼런스
+- [Text-CNN1](https://www.slideshare.net/langley0/textcnn-sentiment)
 - [Text-CNN2](https://ratsgo.github.io/natural%20language%20processing/2017/03/19/CNN/)
 - [Yoon Kim 2014](http://emnlp2014.org/papers/pdf/EMNLP2014181.pdf)
 - [Tensorflow with text-cnn](http://www.wildml.com/2015/12/implementing-a-cnn-for-text-classification-in-tensorflow/)
