@@ -8,6 +8,13 @@ README 수정 및 설명 추가는 자유입니다.!
 - 가중치가 높은 맛집 리뷰를 통한 워드클라우드 시각화
 - 웹 퍼블리싱을 통한 자료 시각화
 
+## 스택
+<p><img width="100" src="https://img.stackshare.io/service/3837/paeckCWC.png" /></p>
+<p><img width="100" src="https://img.stackshare.io/service/4717/fKW2snt9.png" /></p>
+<p><img width="100" src="https://img.stackshare.io/service/1491/ZtYnmL9U.jpeg" /></p>
+<p><img width="100" src="https://img.stackshare.io/service/389/amazon-dynamodb.png" /></p>
+
+
 ## 브랜치(Task)
 해커톤 시 본인의 업무가 끝나면 아직 안끝난 다른 업무를 도와줄수 있습니다!.
 각 분야를 어떤 스택을 가지고 어떻게 처리하겠다라는 거는 이슈로 남겨주세요!!
