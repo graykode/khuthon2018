@@ -53,14 +53,13 @@ def train():
 
     # 트레이닝
     with tf.Session() as sess:
-
         seq_length = np.shape(input[0][0])[0]
         num_class = np.shape(input[0][1])[0]
 
         print('initialize cnn filter')
         print('sequence length %d,  number of class %d, vocab size %d' % (seq_length, num_class, len(vocab)))
 
-        cnn = TextCNN(seq_length, num_class, len(vocab), 128, [3, 4, 5], 128)
+        cnn = TextCNN(seq_length, num_class, len(vocab), 128, [3,4,5], 128)
 
         global_step = tf.Variable(0, name='global_step', trainable=False)
         optimizer = tf.train.AdamOptimizer(1e-3)
