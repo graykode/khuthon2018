@@ -2,10 +2,16 @@ from konlpy.tag import Twitter
 import random
 
 pos_tagger = Twitter()
-SEQUENCE_LENGTH = 100
+SEQUENCE_LENGTH = 50
+
+type = ['Punctuation', 'Foreign', 'Eomi', 'Alpha', 'Conjunction', 'Josa']
 
 def tokenize(doc):
-    return ['/'.join(t) for t in pos_tagger.pos(doc, norm=True, stem=True)]
+    result = []
+    for t in pos_tagger.pos(doc, norm=True, stem=True):
+        if t[1] not in type:
+            result.append('/'.join(t))
+    return result
 
 # 파일 데이터는 UTF-8 인코딩이어야함.
 def read_raw_data(filename):
@@ -14,14 +20,20 @@ def read_raw_data(filename):
 
         # data[1:]로 맨위 row를 뺀다
         # 3번 칼럼이 포인트, 4번이 댓글
-        data = [(tokenize(row[4]), int(float(row[3]))) for row in data[1:]]
+        try:
+            data = [(tokenize(row[1]), int(float(row[0]))) for row in data]
+        except Exception as ex:
+            print(ex)
     return data
 
 # 단순히 텍스트 파일 셔플링
 def read_raw_text(filename):
     with open(filename, 'r', encoding='utf-8') as f:
-        data = [line.split('\t') for line in f.read().splitlines()]
-        data = [row for row in data[1:]]
+        data = []
+        for line in f.read().splitlines():
+            r = line.split('\t')
+            if(len(r[1]) >= 30):
+                data.append(line)
 
         # 중요!! 반드시 셔플시켜야함.
         random.shuffle(data)
@@ -66,11 +78,13 @@ def get_token_id(token, vocab):
 
 # one-hot 방식으로 포인트 1,2는 0, 3,4,5는 1로 라벨링
 def get_onehot(score):
-    onehot = [0] * 2
-    if score == 1 or score == 2:
+    onehot = [0] * 3
+    if score == 1 or score == 2 or score == 3:
         onehot[0] = 1
-    elif score == 3 or score == 4 or score == 5:
+    elif score == 4:
         onehot[1] = 1
+    elif score == 5:
+        onehot[2] = 1
     return onehot
 
 # *.data 파일 생성
@@ -98,7 +112,8 @@ def save_vocab(filename, vocab):
 def save_text(filename, data):
     with open(filename, 'w', encoding='utf-8') as f:
         for d in data:
-            f.write('%s\t%s\t%s\t%s\t%s\n' % (d[0], d[1], d[2], d[3], d[4]))
+            ls = d.split('\t')
+            f.write('%s\t%s\n' % (ls[0], ls[1]))
 
 def build_input(data, vocab):
 
@@ -117,13 +132,14 @@ def build_input(data, vocab):
             result.append((seq_seg, get_onehot(d[1])))
 
     return result
+  
+def check(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
+        data = [line.split('\t') for line in f.read().splitlines()]
+        for d in data:
+            if(len(d) != 2):
+                print(d)
 
 if __name__ == '__main__':
-    raw_data = read_raw_text('khu')
+ 
     print('pos_tagger finish')
-
-    rows = len(raw_data)
-    bound = int(rows * 0.8)
-
-    save_text('train', raw_data[:bound])
-    save_text('test', raw_data[bound + 1:])
